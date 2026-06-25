@@ -31,3 +31,4 @@ export const useAuthStore = defineStore('auth', () => {
 
     return { token, namaLengkap, role, setAuth, logout, isAdmin, isAuthenticated }
 })
+

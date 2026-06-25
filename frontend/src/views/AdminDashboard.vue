@@ -5,6 +5,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 import { Bar } from 'vue-chartjs'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
+import Navbar from "../components/Navbar.vue";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -75,6 +76,23 @@ const unduhPDF = () => {
   window.print()
 }
 
+const loadingAI = ref(false)
+
+const latihUlangAI = async () => {
+  loadingAI.value = true
+  try {
+    const response = await axios.post('http://localhost:8082/api/admin/ai/sync', {}, {
+      headers: { Authorization: `Bearer ${authStore.token}` }
+    })
+    alert(response.data.message)
+  } catch (err) {
+    const pesanError = err.response?.data?.error || err.message
+    alert(`Gagal melatih AI: ${pesanError}`)
+  } finally {
+    loadingAI.value = false
+  }
+}
+
 onMounted(() => {
   fetchLaporan()
 })
@@ -83,39 +101,7 @@ onMounted(() => {
 <template>
   <div class="bg-gray-50 min-h-screen font-sans">
 
-    <nav class="bg-white shadow-sm border-b border-gray-200 print:hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-
-          <div class="flex">
-            <div class="flex-shrink-0 flex items-center mr-8">
-              <span class="text-2xl font-black text-indigo-600 tracking-tight">Smart<span class="text-gray-800">Admin</span></span>
-            </div>
-            <div class="hidden sm:flex sm:space-x-8">
-              <router-link to="/admin" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-bold">
-                Dasbor
-              </router-link>
-              <router-link to="/admin/produk" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
-                Produk
-              </router-link>
-              <router-link to="/admin/pesanan" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
-                Pesanan
-              </router-link>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <router-link to="/" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition">
-              Lihat Toko ↗
-            </router-link>
-            <div class="h-6 w-px bg-gray-200"></div> <button @click="prosesLogout" class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-100 transition border border-red-100">
-            Logout
-          </button>
-          </div>
-
-        </div>
-      </div>
-    </nav>
+    <Navbar />
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -128,6 +114,15 @@ onMounted(() => {
         <button @click="unduhPDF" class="print:hidden bg-indigo-600 text-white px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition font-semibold shadow-sm flex items-center gap-2 border border-indigo-700">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
           Cetak PDF
+        </button>
+
+        <button
+            @click="latihUlangAI"
+            :disabled="loadingAI"
+            class="bg-purple-600 text-white px-5 py-2.5 rounded-lg hover:bg-purple-700 transition font-semibold shadow-sm flex items-center gap-2 border border-purple-700 disabled:opacity-50"
+        >
+          <span v-if="loadingAI">⚙️ Memproses Data...</span>
+          <span v-else>🧠 Latih Ulang AI Rekomendasi</span>
         </button>
       </div>
 

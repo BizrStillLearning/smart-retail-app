@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth'
+import Navbar from "../components/Navbar.vue";
 
 const authStore = useAuthStore()
 
@@ -120,6 +121,8 @@ onMounted(() => fetchProduk())
 </script>
 
 <template>
+  <Navbar />
+
   <div class="p-8 bg-gray-50 min-h-screen">
     <div class="max-w-6xl mx-auto">
 

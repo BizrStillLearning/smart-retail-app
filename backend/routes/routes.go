@@ -17,7 +17,7 @@ func SetupRoutes(r *gin.Engine) {
 		api.POST("/pesanan", handlers.BuatPesanan)
 		api.PUT("/pesanan/:id/batal", handlers.BatalkanPesanan)
 		api.GET("/laporan/top-kategori", handlers.GetTopKategori)
-
+		api.GET("/produk/:id/rekomendasi", handlers.GetRecommendations)
 		adminGroup := api.Group("/admin")
 		adminGroup.Use(middlewares.RequireAdmin())
 		{
@@ -26,6 +26,12 @@ func SetupRoutes(r *gin.Engine) {
 			adminGroup.DELETE("/produk/:id", handlers.HapusProduk)
 			adminGroup.GET("/pesanan", handlers.GetAllPesanan)
 			adminGroup.PUT("/pesanan/:id/status", handlers.UpdateStatusPesanan)
+			adminGroup.GET("/pesanan/:id/total", handlers.GetTotalTagihanPesanan)
+			adminGroup.POST("/ai/sync", handlers.SyncAndTrainAI)
+			adminGroup.GET("/promo", handlers.GetAllPromo)
+			adminGroup.POST("/promo", handlers.TambahPromo)
+			adminGroup.PUT("/promo/:id/status", handlers.ToggleStatusPromo)
+			adminGroup.DELETE("/promo/:id", handlers.HapusPromo)
 		}
 	}
 }

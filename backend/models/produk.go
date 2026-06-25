@@ -6,6 +6,7 @@ type Produk struct {
 	Kategori   string  `gorm:"column:kategori" json:"kategori"`
 	Harga      float64 `gorm:"column:harga" json:"harga"`
 	Gambar     string  `gorm:"column:gambar" json:"gambar"`
+	Stok       int     `gorm:"column:stok" json:"stok"`
 }
 
 type TopKategori struct {

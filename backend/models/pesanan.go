@@ -7,6 +7,9 @@ type Pesanan struct {
 	IDPelanggan  int             `gorm:"column:id_pelanggan" json:"id_pelanggan"`
 	TanggalPesan time.Time       `gorm:"column:tanggal_pesan" json:"tanggal_pesan"`
 	Status       string          `gorm:"column:status" json:"status"`
+	IDPromo      *int            `gorm:"column:id_promo" json:"id_promo"`
+	TotalDiskon  float64         `gorm:"column:total_diskon" json:"total_diskon"`
+	TotalAkhir   float64         `gorm:"column:total_akhir" json:"total_akhir"`
 	Detail       []DetailPesanan `gorm:"foreignKey:IDPesanan" json:"detail"`
 }
 
@@ -27,7 +30,8 @@ func (DetailPesanan) TableName() string {
 }
 
 type CheckoutInput struct {
-	IDPelanggan int `json:"id_pelanggan"`
+	IDPelanggan int    `json:"id_pelanggan"`
+	KodePromo   string `json:"kode_promo"`
 	Items       []struct {
 		IDProduk  int `json:"id_produk"`
 		Kuantitas int `json:"kuantitas"`
