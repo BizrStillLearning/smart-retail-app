@@ -148,7 +148,6 @@ onMounted(() => {
         </form>
       </div>
 
-      <!-- TABEL DAFTAR PROMO -->
       <div class="lg:col-span-2">
         <div v-if="loading" class="text-center py-10 text-gray-500 font-medium animate-pulse">Memuat data operasional...</div>
 

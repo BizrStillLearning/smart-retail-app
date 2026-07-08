@@ -1,13 +1,23 @@
 package models
 
 type Pelanggan struct {
-	IDPelanggan   int    `gorm:"primaryKey;column:id_pelanggan;autoIncrement" json:"id_pelanggan"`
-	NamaPelanggan string `gorm:"column:nama_pelanggan" json:"nama_pelanggan"`
-	Alamat        string `gorm:"column:alamat" json:"alamat"`
-	TipeMember    string `gorm:"column:tipe_member" json:"tipe_member"`
-	PoinLoyalitas int    `gorm:"column:poin_loyalitas" json:"poin_loyalitas"`
+	IDPelanggan   int    `gorm:"primaryKey;autoIncrement" json:"id_pelanggan"`
+	NamaPelanggan string `json:"nama_pelanggan"`
+	Alamat        string `json:"alamat"`
+	TipeMember    string `json:"tipe_member"`
+	PoinLoyalitas int    `json:"poin_loyalitas"`
+
+	Email         string `gorm:"unique;default:null" json:"email"`
+	PasswordHash  string `json:"-"`
 }
 
-func (Pelanggan) TableName() string {
-	return "pelanggan"
+type LoginPelangganRequest struct {
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type RegisterPelangganRequest struct {
+	NamaPelanggan string `json:"nama_pelanggan" binding:"required"`
+	Email         string `json:"email" binding:"required"`
+	Password      string `json:"password" binding:"required"`
 }

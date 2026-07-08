@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import KatalogProduk from '../components/KatalogProduk.vue'
+import KatalogProduk from '../views/KatalogProduk.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import ManajemenProduk from '../views/ManajemenProduk.vue'
 import ManajemenPesanan from '../views/ManajemenPesanan.vue'

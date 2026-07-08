@@ -123,3 +123,32 @@ func HapusProduk(c *gin.Context) {
 	config.DB.Delete(&produk)
 	c.JSON(http.StatusOK, gin.H{"message": "Produk berhasil dihapus"})
 }
+
+func GetKatalogProdukPublik(c *gin.Context) {
+	var daftarProduk []models.Produk
+
+	if err := config.DB.Where("stok > 0").Find(&daftarProduk).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal mengambil katalog produk"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "sukses",
+		"data":   daftarProduk,
+	})
+}
+
+func GetProdukByIDPublik(c *gin.Context) {
+	idProduk := c.Param("id")
+	var produk models.Produk
+
+	if err := config.DB.Where("id_produk = ? AND stok > 0", idProduk).First(&produk).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Produk tidak ditemukan atau stok habis"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "sukses",
+		"data":   produk,
+	})
+}

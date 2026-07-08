@@ -3,14 +3,16 @@ package models
 import "time"
 
 type Pesanan struct {
-	IDPesanan    int             `gorm:"primaryKey;column:id_pesanan;autoIncrement" json:"id_pesanan"`
-	IDPelanggan  int             `gorm:"column:id_pelanggan" json:"id_pelanggan"`
-	TanggalPesan time.Time       `gorm:"column:tanggal_pesan" json:"tanggal_pesan"`
-	Status       string          `gorm:"column:status" json:"status"`
-	IDPromo      *int            `gorm:"column:id_promo" json:"id_promo"`
-	TotalDiskon  float64         `gorm:"column:total_diskon" json:"total_diskon"`
-	TotalAkhir   float64         `gorm:"column:total_akhir" json:"total_akhir"`
-	Detail       []DetailPesanan `gorm:"foreignKey:IDPesanan" json:"detail"`
+	IDPesanan        int             `gorm:"primaryKey;column:id_pesanan;autoIncrement" json:"id_pesanan"`
+	IDPelanggan      int             `gorm:"column:id_pelanggan" json:"id_pelanggan"`
+	TanggalPesan     time.Time       `gorm:"column:tanggal_pesan" json:"tanggal_pesan"`
+	Status           string          `gorm:"column:status" json:"status"`
+	IDPromo          *int            `gorm:"column:id_promo" json:"id_promo"`
+	TotalDiskon      float64         `gorm:"column:total_diskon" json:"total_diskon"`
+	TotalAkhir       float64         `gorm:"column:total_akhir" json:"total_akhir"`
+	Detail           []DetailPesanan `gorm:"foreignKey:IDPesanan" json:"detail"`
+	MetodePembayaran string          `gorm:"column:metode_pembayaran" json:"metode_pembayaran"`
+	BuktiTransfer    string          `gorm:"column:bukti_transfer" json:"bukti_transfer"`
 }
 
 type DetailPesanan struct {

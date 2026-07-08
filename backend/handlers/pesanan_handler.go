@@ -228,3 +228,20 @@ func GetTotalTagihanPesanan(c *gin.Context) {
 		"total_tagihan": total,
 	})
 }
+
+func GetPesananOnlineAdmin(c *gin.Context) {
+	var daftarPesanan []models.Pesanan
+
+	if err := config.DB.Preload("Detail").
+		Where("metode_pembayaran != ?", "").
+		Order("tanggal_pesan desc").
+		Find(&daftarPesanan).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal menarik data pesanan"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "sukses",
+		"data":   daftarPesanan,
+	})
+}

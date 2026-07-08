@@ -197,11 +197,13 @@ onMounted(() => fetchProduk())
               <div v-else class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-xs text-gray-400">No Img</div>
             </td>
 
-            <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-1">Upload Gambar</label>
-              <input type="file" @change="handleFileChange" accept="image/*" class="w-full px-4 py-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
-              <p v-if="isEditing" class="text-xs text-gray-500 mt-1">*Kosongkan jika tidak ingin mengubah gambar</p>
-            </div>
+            <td>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Upload Gambar</label>
+                <input type="file" @change="handleFileChange" accept="image/*" class="w-full px-4 py-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
+                <p v-if="isEditing" class="text-xs text-gray-500 mt-1">*Kosongkan jika tidak ingin mengubah gambar</p>
+              </div>
+            </td>
           </tr>
           </tbody>
         </table>
